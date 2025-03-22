@@ -3,6 +3,7 @@ import {
   View, Text, TextInput, TouchableOpacity, StyleSheet, Image 
 } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
+import { useRouter } from "expo-router";
 
 // Definisikan tipe navigasi
 type RootStackParamList = {
@@ -17,6 +18,7 @@ type Props = {
 };
 
 const RegisterScreen: React.FC<Props> = ({ navigation }) => {
+  const router = useRouter();
   const [fullname, setFullname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -64,14 +66,14 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
       />
 
       {/* Tombol Register */}
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Login")}>
+      <TouchableOpacity style={styles.button} onPress={() => router.push("/login")}>
         <Text style={styles.buttonText}>Register</Text>
       </TouchableOpacity>
 
       {/* Navigasi ke Login */}
       <Text style={styles.loginText}>
         Have an account?{" "}
-        <Text style={styles.loginLink} onPress={() => navigation.navigate("Login")}>
+        <Text style={styles.loginLink} onPress={() => router.push("/login")}>
           Login here
         </Text>
       </Text>

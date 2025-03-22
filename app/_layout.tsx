@@ -1,22 +1,12 @@
-import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack";
-import LoginScreen from "./login";
-import RegisterScreen from "./register";
-import { Tabs } from "expo-router"; 
-
-type RootStackParamList = {
-  Login: undefined;
-  Register: undefined;
-  Tabs: undefined; 
-};
-
-const Stack = createNativeStackNavigator<RootStackParamList>();
+// app/_layout.tsx
+import { Stack } from "expo-router";
 
 export default function RootLayout() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="Register" component={RegisterScreen} />
-      <Stack.Screen name="Tabs" component={Tabs} />
-    </Stack.Navigator>
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="login" />
+      <Stack.Screen name="register" />
+      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+    </Stack>
   );
 }
