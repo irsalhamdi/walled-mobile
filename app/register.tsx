@@ -3,8 +3,6 @@ import {
   View, Text, TextInput, TouchableOpacity, StyleSheet, Image 
 } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import CheckBox from "@react-native-community/checkbox";
-
 
 // Definisikan tipe navigasi
 type RootStackParamList = {
@@ -23,7 +21,6 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [avatarUrl, setAvatarUrl] = useState("");
-  const [isChecked, setIsChecked] = useState(false);
 
   return (
     <View style={styles.container}>
@@ -66,21 +63,8 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
         onChangeText={setAvatarUrl}
       />
 
-      {/* Checkbox untuk Terms & Conditions */}
-      {/* <View style={styles.checkboxContainer}>
-      <CheckBox
-        value={isChecked}
-        onValueChange={setIsChecked}
-        tintColors={{ true: "#007AFF", false: "#8e8e93" }} // Warna ketika aktif & nonaktif
-      />
-        <Text style={styles.checkboxText}>
-          I have read and agree to the{" "}
-          <Text style={styles.termsLink}>Terms and Conditions</Text> <Text style={styles.required}>*</Text>
-        </Text>
-      </View> */}
-
       {/* Tombol Register */}
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Login")}>
         <Text style={styles.buttonText}>Register</Text>
       </TouchableOpacity>
 
@@ -123,23 +107,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     backgroundColor: "#f9f9f9",
     marginBottom: 15,
-  },
-  checkboxContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 15,
-  },
-  checkboxText: {
-    fontSize: 14,
-    color: "#666",
-    marginLeft: 8,
-  },
-  termsLink: {
-    color: "#2563eb",
-    fontWeight: "bold",
-  },
-  required: {
-    color: "red",
   },
   button: {
     backgroundColor: "#2563eb",

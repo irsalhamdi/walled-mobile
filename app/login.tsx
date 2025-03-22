@@ -1,33 +1,28 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from "react-native";
-import { StackNavigationProp } from "@react-navigation/stack";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { useNavigation } from "@react-navigation/native";
 
-// Definisikan tipe untuk navigasi
 type RootStackParamList = {
   Login: undefined;
   Register: undefined;
 };
 
-type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, "Login">;
+type LoginScreenProps = NativeStackScreenProps<RootStackParamList, "Login">;
 
-type Props = {
-  navigation: LoginScreenNavigationProp;
-};
-
-const LoginScreen: React.FC<Props> = ({ navigation }) => {
+const LoginScreen = () => {
+  const navigation = useNavigation<LoginScreenProps["navigation"]>();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   return (
     <View style={styles.container}>
-      {/* Logo dari URL */}
       <Image
         source={{ uri: "https://cdn-icons-png.flaticon.com/512/3144/3144456.png" }}
         style={styles.logo}
       />
       <Text style={styles.title}>Walled</Text>
 
-      {/* Input Email */}
       <TextInput
         style={styles.input}
         placeholder="Email"
@@ -35,9 +30,8 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
         keyboardType="email-address"
         value={email}
         onChangeText={setEmail}
-        />
+      />
 
-      {/* Input Password */}
       <TextInput
         style={styles.input}
         placeholder="Password"
@@ -47,12 +41,10 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
         onChangeText={setPassword}
       />
 
-      {/* Tombol Login */}
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.replace("Login")}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
 
-      {/* Navigasi ke Register */}
       <Text style={styles.registerText}>
         Don’t have an account?{" "}
         <Text style={styles.registerLink} onPress={() => navigation.navigate("Register")}>
@@ -62,6 +54,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
     </View>
   );
 };
+
 
 // **Gaya**
 const styles = StyleSheet.create({
