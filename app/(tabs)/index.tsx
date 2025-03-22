@@ -1,74 +1,118 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import React, { useState } from "react";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from "react-native";
+import { StackNavigationProp } from "@react-navigation/stack";
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+// Definisikan tipe untuk navigasi
+type RootStackParamList = {
+  Login: undefined;
+  Register: undefined;
+};
 
-export default function HomeScreen() {
+type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, "Login">;
+
+type Props = {
+  navigation: LoginScreenNavigationProp;
+};
+
+const LoginScreen: React.FC<Props> = ({ navigation }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
-  );
-}
+    <View style={styles.container}>
+      {/* Logo dari URL */}
+      <Image
+        source={{ uri: "https://cdn-icons-png.flaticon.com/512/3144/3144456.png" }}
+        style={styles.logo}
+      />
+      <Text style={styles.title}>Walled</Text>
 
+      {/* Input Email */}
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        placeholderTextColor={"#666"}
+        keyboardType="email-address"
+        value={email}
+        onChangeText={setEmail}
+        />
+
+      {/* Input Password */}
+      <TextInput
+        style={styles.input}
+        placeholder="Password"
+        placeholderTextColor={"#666"}
+        secureTextEntry
+        value={password}
+        onChangeText={setPassword}
+      />
+
+      {/* Tombol Login */}
+      <TouchableOpacity style={styles.button}>
+        <Text style={styles.buttonText}>Login</Text>
+      </TouchableOpacity>
+
+      {/* Navigasi ke Register */}
+      <Text style={styles.registerText}>
+        Don’t have an account?{" "}
+        <Text style={styles.registerLink} onPress={() => navigation.navigate("Register")}>
+          Register here
+        </Text>
+      </Text>
+    </View>
+  );
+};
+
+// **Gaya**
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fff",
+    padding: 20,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  logo: {
+    width: 80,
+    height: 80,
+    marginBottom: 10,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+  input: {
+    width: "100%",
+    height: 50,
+    borderWidth: 1,
+    borderColor: "#ddd",
+    borderRadius: 10,
+    paddingHorizontal: 15,
+    backgroundColor: "#f9f9f9",
+    marginBottom: 15,
+  },
+  button: {
+    backgroundColor: "#2563eb",
+    paddingVertical: 15,
+    width: "100%",
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  registerText: {
+    marginTop: 15,
+    fontSize: 14,
+    color: "#666",
+  },
+  registerLink: {
+    color: "#2563eb",
+    fontWeight: "bold",
   },
 });
+
+export default LoginScreen;
