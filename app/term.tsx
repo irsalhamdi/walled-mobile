@@ -1,20 +1,32 @@
 import React, { useState } from "react";
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import { 
+  View, Text, ScrollView, TouchableOpacity, StyleSheet, Alert 
+} from "react-native";
+import { useRouter, useLocalSearchParams } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
 
-export default function TermsAndConditionsScreen({  }) {
+function TermsAndConditionsScreen() {
+  const router = useRouter();
+  const params = useLocalSearchParams();
   const [accepted, setAccepted] = useState(false);
 
   const handleAccept = () => {
     setAccepted(true);
     Alert.alert("Thank you!", "You have accepted the Terms & Conditions.");
-    // Jika ingin pindah ke halaman lain, bisa gunakan:
-    // navigation.navigate("Home");
+    router.push("/register?acceptedTerms=true"); // Kembali ke halaman Register
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Terms & Conditions</Text>
-      
+      {/* Header dengan tombol kembali dan judul yang sejajar */}
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
+        <Ionicons name="arrow-back" size={24} color="black" />
+        </TouchableOpacity>
+        <Text style={styles.title}>Terms & Conditions</Text>
+        <View style={styles.placeholder} /> 
+      </View>
+
       <ScrollView style={styles.scrollView}>
         <Text style={styles.content}>
           Welcome to our application. Before using our services, please read these Terms & Conditions carefully. 
@@ -53,10 +65,27 @@ const styles = StyleSheet.create({
     backgroundColor: "#F9F9F9",
     padding: 20,
   },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 20,
+  },
+  backButton: {
+    padding: 10,
+  },
+  backText: {
+    fontSize: 24,
+    fontWeight: "bold",
+  },
   title: {
     fontSize: 22,
     fontWeight: "bold",
-    marginBottom: 15,
+    textAlign: "center",
+    flex: 1, // Agar tetap di tengah
+  },
+  placeholder: {
+    width: 40, // Untuk menjaga keseimbangan di header
   },
   scrollView: {
     flex: 1,
@@ -82,3 +111,5 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
+
+export default TermsAndConditionsScreen;
