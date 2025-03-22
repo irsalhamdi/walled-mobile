@@ -18,7 +18,7 @@ export default function TabLayout() {
         name="dashboard"
         options={{
           title: "Dashboard",
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="key" color={color} />,
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house" color={color} />,
         }}
       />
       <Tabs.Screen
@@ -32,14 +32,14 @@ export default function TabLayout() {
         name="topup"
         options={{
           title: "Top Up",
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="arrow.down.to.line" color={color} />,
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="arrow.up.to.line" color={color} />,
         }}
       />
       <Tabs.Screen
-        name="term"
+        name="logout"
         options={{
-          title: "Terms & Conditions",
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="doc.text" color={color} />,
+          title: "Logout",
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="power" color={color} />,
         }}
       />
     </Tabs>

@@ -1,57 +1,116 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
-import { Picker } from "@react-native-picker/picker";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Modal } from "react-native";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import ModalSelector from "react-native-modal-selector";
+import { useNavigation } from "@react-navigation/native";
 
 export default function TopUpScreen() {
+  const paymentMethods = [
+    { key: "byond", label: "BYOND Pay" },
+    { key: "gopay", label: "GoPay" },
+    { key: "ovo", label: "OVO" },
+    { key: "dana", label: "Dana" },
+  ];
+
+  const navigation = useNavigation();
   const [amount, setAmount] = useState("");
   const [selectedPayment, setSelectedPayment] = useState("byond");
   const [notes, setNotes] = useState("");
+  const [isSuccessModalVisible, setSuccessModalVisible] = useState(false);
+
+  const handleAmountChange = (text: string) => {
+    const numericValue = text.replace(/[^0-9]/g, "");
+    setAmount(numericValue);
+  };
+
+  const handleTopUp = () => {
+    setSuccessModalVisible(true);
+  };
+
+  const handleModalClose = () => {
+    setSuccessModalVisible(false);
+    setAmount(""); 
+    setSelectedPayment("byond"); 
+    setNotes(""); 
+  };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Top Up</Text>
 
-      {/* Input Amount */}
-      <Text style={styles.label}>Amount</Text>
-      <View style={styles.inputRow}>
-        <Text style={styles.currency}>IDR</Text>
+      <View style={styles.headerContainer}>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+          <Ionicons name="arrow-back" size={24} color="#2d6cdf" />
+        </TouchableOpacity>
+        <Text style={styles.header}>Top Up</Text>
+      </View>
+      
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Amount</Text>
+        <View style={styles.amountRow}>
+          <Text style={styles.currency}>IDR</Text>
+          <TextInput
+            style={styles.inputAmount}
+            keyboardType="numeric"
+            placeholder="100000"
+            placeholderTextColor="#000000"
+            value={amount}
+            onChangeText={handleAmountChange}
+          />
+        </View>
+      </View>
+
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Payment Method</Text>
+        <View>
+          <ModalSelector
+            data={paymentMethods}
+            initValue={selectedPayment ? selectedPayment : "Select Payment Method"} // Gunakan nilai yang dipilih
+            onChange={(option) => setSelectedPayment(option.label)} // Simpan label
+            initValueTextStyle={styles.initValueText}
+            selectTextStyle={styles.selectText}
+            optionTextStyle={styles.optionText}
+            optionContainerStyle={styles.optionContainer}
+            selectedItemTextStyle={styles.selectedItemText}
+            style={{ borderWidth: 0, backgroundColor: "transparent" }} // Hapus border bawaan
+          />
+        </View>
+      </View>
+
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Notes</Text>
         <TextInput
           style={styles.input}
-          keyboardType="numeric"
-          placeholder="0"
-          value={amount}
-          onChangeText={setAmount}
+          placeholderTextColor="#999"
+          value={notes}
+          onChangeText={setNotes}
         />
       </View>
-
-      {/* Dropdown Payment menggunakan Picker */}
-      <Text style={styles.label}>Payment Method</Text>
-      <View style={styles.pickerContainer}>
-        <Picker
-          selectedValue={selectedPayment}
-          onValueChange={(itemValue) => setSelectedPayment(itemValue)}
-          style={styles.picker}
-        >
-          <Picker.Item label="BYOND Pay" value="byond" />
-          <Picker.Item label="GoPay" value="gopay" />
-          <Picker.Item label="OVO" value="ovo" />
-          <Picker.Item label="Dana" value="dana" />
-        </Picker>
+      
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.button} onPress={handleTopUp}>
+          <Text style={styles.buttonText}>Top Up</Text>
+        </TouchableOpacity>
       </View>
 
-      {/* Notes */}
-      <Text style={styles.label}>Notes</Text>
-      <TextInput
-        style={styles.noteInput}
-        placeholder="Enter your notes"
-        value={notes}
-        onChangeText={setNotes}
-      />
-
-      {/* Button */}
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Top Up</Text>
-      </TouchableOpacity>
+      <Modal
+        visible={isSuccessModalVisible}
+        transparent
+        animationType="fade"
+        onRequestClose={handleModalClose}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Ionicons name="checkmark-circle" size={60} color="green" />
+            <Text style={styles.modalText}>Top Up Successful!</Text>
+            <TouchableOpacity
+              style={styles.modalButtonFullWidth}
+              onPress={handleModalClose}
+            >
+              <Text style={styles.modalButtonText}>OK</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -59,65 +118,135 @@ export default function TopUpScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F9F9F9",
+    backgroundColor: "#f7f7f7",
     padding: 20,
+    paddingTop: 40,  //
   },
-  title: {
-    fontSize: 22,
+  headerContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  backButton: {
+    marginRight: 10,
+  },
+  header: {
+    fontSize: 20,
     fontWeight: "bold",
+  },
+  inputContainer: {
+    backgroundColor: "#fff",
+    padding: 15,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: "#2d6cdf",
     marginBottom: 15,
   },
   label: {
-    fontSize: 14,
-    fontWeight: "600",
-    marginTop: 10,
+    fontSize: 16,
     color: "#777",
   },
-  inputRow: {
+  amountRow: {
     flexDirection: "row",
     alignItems: "center",
-    borderBottomWidth: 1,
-    borderBottomColor: "#CCC",
-    marginBottom: 10,
+    marginTop: 10,
   },
   currency: {
-    fontSize: 18,
+    fontSize: 24,
     fontWeight: "bold",
     marginRight: 10,
   },
-  input: {
+  inputAmount: {
     flex: 1,
     fontSize: 18,
-    paddingVertical: 5,
+    fontWeight: "bold",
+    marginTop: 5,
   },
-  pickerContainer: {
-    backgroundColor: "white",
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: "#CCC",
-    marginBottom: 10,
+  input: {
+    fontSize: 18,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
+    paddingBottom: 5,
+    marginTop: 5,
   },
-  picker: {
-    height: 50,
-    width: "100%",
-  },
-  noteInput: {
-    backgroundColor: "white",
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: "#CCC",
-    padding: 10,
-    marginBottom: 20,
-  },
-  button: {
-    backgroundColor: "#2962FF",
-    padding: 15,
-    borderRadius: 5,
-    alignItems: "center",
-  },
-  buttonText: {
-    color: "white",
+  initValueText: {
+    color: "#2d6cdf",
     fontSize: 16,
     fontWeight: "bold",
   },
+  selectText: {
+    color: "#000",
+    fontSize: 18,
+  },
+  optionText: {
+    color: "#333",
+    fontSize: 16,
+  },
+  optionContainer: {
+    backgroundColor: "#e6f0ff",
+    borderRadius: 10,
+  },
+  selectedItemText: {
+    color: "#2d6cdf",
+    fontWeight: "bold",
+  },
+  selectedPaymentText: {
+    fontSize: 16,
+    color: "#333",
+    marginTop: 10,
+    fontWeight: "bold",
+  },
+  selectedPaymentValue: {
+    color: "#000",
+    fontWeight: "bold",
+  },
+  buttonContainer: {
+    position: "absolute",
+    bottom: 20,
+    left: 20,
+    right: 20,
+  },
+  button: {
+    backgroundColor: "#2d6cdf",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0,0,0,0.5)",
+  },
+  modalContent: {
+    backgroundColor: "#fff",
+    padding: 20,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  modalButtonFullWidth: {
+    marginTop: 15,
+    backgroundColor: "#2d6cdf",
+    padding: 12,
+    borderRadius: 5,
+    width: "100%",
+    alignItems: "center",
+  },
+  modalButtonText: {
+    color: "#fff",
+    fontSize: 16,
+  },
+  modalText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginTop: 10,
+    color: "#333",
+    textAlign: "center",
+  },
+  
 });

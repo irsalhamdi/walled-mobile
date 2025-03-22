@@ -1,32 +1,93 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Modal } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 const TransferScreen = () => {
+  const navigation = useNavigation();
   const [amount, setAmount] = useState("");
+  const [notes, setNotes] = useState(""); //
+  const [isSuccessModalVisible, setSuccessModalVisible] = useState(false);
   const balance = 10000000;
+  const recipient = "9000008940208";
+
+  const handleAmountChange = (text: string) => {
+    const numericValue = text.replace(/[^0-9]/g, "");
+    setAmount(numericValue);
+  };
+
+  const handleTransfer = () => {
+    setSuccessModalVisible(true);
+  };
+
+  const handleModalClose = () => {
+    setSuccessModalVisible(false);
+    setAmount(""); 
+    setNotes(""); 
+  };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Transfer</Text>
+      <View style={styles.headerContainer}>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+          <Ionicons name="arrow-back" size={24} color="#2d6cdf" />
+        </TouchableOpacity>
+        <Text style={styles.header}>Transfer</Text>
+      </View>
+      
+      <View style={styles.recipientContainer}>
+        <Text style={styles.recipientLabel}>To: <Text style={styles.recipient}>{recipient}</Text></Text>
+      </View>
 
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Amount</Text>
         <View style={styles.amountRow}>
           <Text style={styles.currency}>IDR</Text>
           <TextInput
-            style={styles.input}
+            style={styles.inputAmount}
             keyboardType="numeric"
             value={amount}
-            onChangeText={setAmount}
+            onChangeText={handleAmountChange}
             placeholder="0"
           />
         </View>
-        <Text style={styles.balance}>Balance: IDR {balance.toLocaleString()}</Text>
+        <View style={styles.separator} />
+          <Text style={styles.balance}>Balance <Text style={styles.balanceAmount}>IDR {balance.toLocaleString()}</Text></Text>
       </View>
-
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Transfer</Text>
-      </TouchableOpacity>
+      
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Notes</Text>
+        <TextInput style={styles.input}
+        value={notes}
+        onChangeText={setNotes}
+        />
+      </View>
+      
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.button} onPress={handleTransfer}>
+          <Text style={styles.buttonText}>Transfer</Text>
+        </TouchableOpacity>
+      </View>
+      
+      <Modal
+        visible={isSuccessModalVisible}
+        transparent
+        animationType="fade"
+        onRequestClose={handleModalClose}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Ionicons name="checkmark-circle" size={60} color="green" />
+            <Text style={styles.modalText}>Transfer Successful!</Text>
+            <TouchableOpacity
+              style={styles.modalButtonFullWidth}
+              onPress={handleModalClose}
+            >
+              <Text style={styles.modalButtonText}>OK</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -36,20 +97,40 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#f7f7f7",
     padding: 20,
+    paddingTop: 40,  //
+  },
+  headerContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  backButton: {
+    marginRight: 10,
   },
   header: {
     fontSize: 20,
     fontWeight: "bold",
-    marginBottom: 20,
+  },
+  recipientContainer: {
+    backgroundColor: "#2d6cdf",
+    padding: 15,
+    borderRadius: 5,
+    marginBottom: 15,
+  },
+  recipientLabel: {
+    color: "#fff",
+    fontSize: 16,
+  },
+  recipient: {
+    fontWeight: "bold",
   },
   inputContainer: {
     backgroundColor: "#fff",
     padding: 15,
     borderRadius: 10,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 3,
+    borderWidth: 2,
+    borderColor: "#2d6cdf",
+    marginBottom: 15,
   },
   label: {
     fontSize: 16,
@@ -61,33 +142,81 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   currency: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: "bold",
+    marginRight: 10,
+  },
+  inputAmount: {
+    flex: 1,
+    fontSize: 18,
+    fontWeight: "bold",
+    marginTop: 5,
   },
   input: {
-    flex: 1,
-    fontSize: 20,
-    marginLeft: 10,
+    fontSize: 16,
     borderBottomWidth: 1,
     borderBottomColor: "#ccc",
     paddingBottom: 5,
+    marginTop: 5,
+  },
+  separator: {
+    height: 1,
+    backgroundColor: "#ccc",
+    marginVertical: 10,
   },
   balance: {
-    marginTop: 10,
+    fontSize: 14,
+    color: "#777",
+  },
+  balanceAmount: {
     color: "blue",
-    textAlign: "right",
+    fontWeight: "bold",
+  },
+  buttonContainer: {
+    position: "absolute",
+    bottom: 20,
+    left: 20,
+    right: 20,
   },
   button: {
     backgroundColor: "#2d6cdf",
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
-    marginTop: 30,
   },
   buttonText: {
     color: "#fff",
     fontSize: 18,
     fontWeight: "bold",
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0,0,0,0.5)",
+  },
+  modalContent: {
+    backgroundColor: "#fff",
+    padding: 20,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  modalText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginTop: 10,
+  },
+  modalButtonFullWidth: {
+    marginTop: 15,
+    backgroundColor: "#2d6cdf",
+    padding: 10,
+    borderRadius: 5,
+    width: "100%",
+    alignItems: "center",
+  },
+  modalButtonText: {
+    color: "#fff",
+    fontSize: 16,
   },
 });
 
