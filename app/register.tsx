@@ -67,7 +67,6 @@ const RegisterScreen = () => {
     <View style={styles.container}>
     <Image source={require("../assets/images/walled.png")} style={styles.logo} resizeMode="contain" />
 
-      {/* Fullname Input */}
       <TextInput
         style={styles.input}
         placeholder="Fullname"
@@ -77,7 +76,6 @@ const RegisterScreen = () => {
       />
       {errors.fullname ? <Text style={styles.errorText}>{errors.fullname}</Text> : null}
 
-      {/* Email Input */}
       <TextInput
         style={styles.input}
         placeholder="Email"
@@ -88,7 +86,6 @@ const RegisterScreen = () => {
       />
       {errors.email ? <Text style={styles.errorText}>{errors.email}</Text> : null}
 
-      {/* Password Input */}
       <TextInput
         style={styles.input}
         placeholder="Password"
@@ -99,7 +96,6 @@ const RegisterScreen = () => {
       />
       {errors.password ? <Text style={styles.errorText}>{errors.password}</Text> : null}
 
-      {/* Avatar URL Input (Tanpa Validasi) */}
       <TextInput
         style={styles.input}
         placeholder="Avatar Url (optional)"
@@ -108,7 +104,6 @@ const RegisterScreen = () => {
         onChangeText={setAvatarUrl}
       />
 
-      {/* Checkbox untuk Terms & Conditions */}
       <View style={styles.checkboxContainer}>
         <TouchableOpacity onPress={() => setAcceptedTerms((prev) => !prev)}>
           <Ionicons
