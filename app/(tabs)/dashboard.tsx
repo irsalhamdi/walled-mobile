@@ -33,21 +33,28 @@ const HomeScreen = () => {
       </View>
 
       <View style={styles.balanceContainer}>
-        <Text style={styles.balanceLabel}>Balance</Text>
-        <View style={styles.balanceRow}>
-          <Text style={styles.balanceAmount}>Rp 10.000.000</Text>
-          <Icon name="eye-outline" size={20} color="#555" />
-        </View>
-      </View>
+  <Text style={styles.balanceLabel}>Balance</Text>
 
-      <View style={styles.actions}>
-        <TouchableOpacity style={styles.actionButton}>
-          <Icon name="add-outline" size={24} color="white" />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.actionButton}>
-          <Icon name="paper-plane-outline" size={24} color="white" />
-        </TouchableOpacity>
-      </View>
+  {/* Baris saldo & ikon mata */}
+  <View style={styles.balanceRow}>
+    <View style={styles.balanceLeft}>
+      <Text style={styles.balanceAmount}>Rp 10.000.000</Text>
+      <Icon name="eye-outline" size={20} color="#555" style={styles.eyeIcon} />
+    </View>
+
+    {/* Tombol-tombol di pojok kanan */}
+    <View style={styles.actions}>
+      <TouchableOpacity style={styles.actionButton}>
+        <Icon name="add-outline" size={24} color="white" />
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.actionButton}>
+        <Icon name="paper-plane-outline" size={24} color="white" />
+      </TouchableOpacity>
+    </View>
+  </View>
+</View>
+
+
 
       <Text style={styles.transactionTitle}>Transaction History</Text>
       <FlatList
@@ -147,24 +154,36 @@ const styles = StyleSheet.create({
   balanceRow: { 
     flexDirection: 'row', 
     alignItems: 'center', 
-    justifyContent: 'space-between', 
+    justifyContent: 'space-between', // Memisahkan saldo & tombol
     marginTop: 8 
+  },
+  balanceLeft: { 
+    flexDirection: 'row', 
+    alignItems: 'center' // Menjaga ikon mata tetap sejajar dengan saldo
   },
   balanceAmount: { 
     fontSize: 20, 
-    fontWeight: 'bold' 
+    fontWeight: 'bold', 
+    marginRight: 8 // Memberi jarak dengan ikon mata
+  },
+  eyeIcon: { 
+    padding: 4 
   },
   actions: { 
     flexDirection: 'row', 
-    justifyContent: 'flex-end', 
-    marginTop: 12 
+    alignItems: 'center', 
+    gap: 12 // Menjaga jarak antara tombol + dan kirim
   },
   actionButton: { 
     backgroundColor: '#1E88E5', 
     padding: 12, 
     borderRadius: 30, 
-    marginLeft: 12 
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    width: 50, 
+    height: 50, 
   },
+  
   transactionTitle: { 
     fontSize: 16, 
     fontWeight: 'bold', 
