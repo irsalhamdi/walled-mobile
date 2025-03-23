@@ -3,15 +3,12 @@ import { View, Text, TouchableOpacity, Modal, StyleSheet } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { Redirect } from "expo-router";
 import { useNavigation } from "@react-navigation/native";
+import CustomModal from "@/components/CustomModal";
 
 const LogoutScreen = () => {
   const navigation = useNavigation();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [shouldRedirect, setShouldRedirect] = useState(false);
-
-  const handleLogout = () => {
-    setShouldRedirect(true); 
-  };
 
   if (shouldRedirect) {
     return <Redirect href="/login" />; 
@@ -32,32 +29,14 @@ const LogoutScreen = () => {
         </TouchableOpacity>
       </View>
 
-      <Modal
+      <CustomModal
         visible={isModalVisible}
-        transparent={true}
-        animationType="fade"
-        onRequestClose={() => setIsModalVisible(false)}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalText}>Are you sure you want to logout?</Text>
-            <View style={styles.modalButtonContainer}>
-              <TouchableOpacity
-                style={[styles.modalButton, { backgroundColor: "#2d6cdf" }]}
-                onPress={handleLogout}
-              >
-                <Text style={styles.modalButtonText}>Yes</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.modalButton, { backgroundColor: "#ccc" }]}
-                onPress={() => setIsModalVisible(false)}
-              >
-                <Text style={styles.modalButtonText}>No</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </Modal>
+        message="Are you sure you want to logout?"
+        onClose={() => setIsModalVisible(false)}
+        onConfirm={() => setShouldRedirect(true)}
+        confirmText="Yes"
+        cancelText="No"
+      />
     </View>
   );
 };

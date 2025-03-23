@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Modal } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import CustomModal from "@/components/CustomModal";
 
 const TransferScreen = () => {
   const navigation = useNavigation();
@@ -69,25 +70,12 @@ const TransferScreen = () => {
         </TouchableOpacity>
       </View>
       
-      <Modal
+      <CustomModal
         visible={isSuccessModalVisible}
-        transparent
-        animationType="fade"
-        onRequestClose={handleModalClose}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Ionicons name="checkmark-circle" size={60} color="green" />
-            <Text style={styles.modalText}>Transfer Successful!</Text>
-            <TouchableOpacity
-              style={styles.modalButtonFullWidth}
-              onPress={handleModalClose}
-            >
-              <Text style={styles.modalButtonText}>OK</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
+        message="Transfer Successful!"
+        iconName="checkmark-circle"
+        onClose={handleModalClose}
+      />
     </View>
   );
 };

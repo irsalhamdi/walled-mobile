@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Modal } from "reac
 import Ionicons from "react-native-vector-icons/Ionicons";
 import ModalSelector from "react-native-modal-selector";
 import { useNavigation } from "@react-navigation/native";
+import CustomModal from "@/components/CustomModal";
 
 export default function TopUpScreen() {
   const paymentMethods = [
@@ -92,25 +93,12 @@ export default function TopUpScreen() {
         </TouchableOpacity>
       </View>
 
-      <Modal
+      <CustomModal
         visible={isSuccessModalVisible}
-        transparent
-        animationType="fade"
-        onRequestClose={handleModalClose}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Ionicons name="checkmark-circle" size={60} color="green" />
-            <Text style={styles.modalText}>Top Up Successful!</Text>
-            <TouchableOpacity
-              style={styles.modalButtonFullWidth}
-              onPress={handleModalClose}
-            >
-              <Text style={styles.modalButtonText}>OK</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
+        message="Top Up Successful!"
+        iconName="checkmark-circle"
+        onClose={handleModalClose}
+      />
     </View>
   );
 }
