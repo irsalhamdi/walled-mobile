@@ -1,9 +1,9 @@
 import React from "react";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import styles from "../styles/styles";
 
-const Header = () => {
+const Header = ({ onToggleTheme, isDarkMode }) => {
   return (
     <View style={styles.header}>
       <Image
@@ -11,15 +11,23 @@ const Header = () => {
         style={styles.profilePic}
       />
       <View>
-        <Text style={styles.userName}>Chelsea Immanuela</Text>
-        <Text style={styles.accountType}>Personal Account</Text>
+        <Text style={[styles.userName, isDarkMode && styles.darkText]}>
+          Chelsea Immanuela
+        </Text>
+        <Text
+          style={[styles.accountType, isDarkMode && styles.darkAccountType]}
+        >
+          Personal Account
+        </Text>
       </View>
-      <Icon
-        name="sunny-outline"
-        size={24}
-        color="#FFA500"
-        style={styles.sunIcon}
-      />
+      <TouchableOpacity onPress={onToggleTheme} style={styles.sunIconContainer}>
+        <Icon
+          name={isDarkMode ? "moon-outline" : "sunny-outline"}
+          size={24}
+          color={isDarkMode ? "#BBB" : "#FFA500"}
+          style={styles.sunIcon}
+        />
+      </TouchableOpacity>
     </View>
   );
 };
