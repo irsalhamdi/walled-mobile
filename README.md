@@ -42,7 +42,7 @@ Aplikasi Mobile Banking ini dibuat menggunakan React Native dan Expo Router. Fit
 - **Navigasi**: Menggunakan `expo-router` untuk berpindah halaman.
 
 ## Cara Mengubah Tema
-Tema dapat diubah dengan mengklik ikon matahari atau bulan di **Header.
+Tema dapat diubah dengan mengklik ikon matahari atau bulan di Header.
 
 ## Pengembang
 - **Irsal Hamdi** - [GitHub](https://github.com/irsalhamdi)
