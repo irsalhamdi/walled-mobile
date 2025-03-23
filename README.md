@@ -11,7 +11,7 @@ Aplikasi Mobile Banking ini dibuat menggunakan React Native dan Expo Router. Fit
 1. Pastikan Anda sudah menginstal Node.js dan npm/yarn.
 2. Clone repositori ini:
    ```sh
-   git clone https://github.com/username/repo.git
+   git clone https://github.com/irsalhamdi/walled-mobile.git
    cd repo
    ```
 3. Instal dependensi:
