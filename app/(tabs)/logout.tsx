@@ -11,7 +11,7 @@ const LogoutScreen = () => {
   const [shouldRedirect, setShouldRedirect] = useState(false);
 
   if (shouldRedirect) {
-    return <Redirect href="/login" />; 
+    return <Redirect href="/login"/>; 
   }
 
   return (
@@ -91,14 +91,14 @@ const styles = StyleSheet.create({
   },
   modalButtonContainer: {
     flexDirection: "row",
-    justifyContent: "space-between", // Spacing between buttons
+    justifyContent: "space-between", 
     width: "100%",
   },
   modalButton: {
     padding: 10,
     borderRadius: 5,
     flex: 1,
-    marginHorizontal: 10, // Added horizontal margin for spacing
+    marginHorizontal: 10, 
     alignItems: "center",
   },
   modalButtonText: {

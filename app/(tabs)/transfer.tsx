@@ -7,7 +7,7 @@ import CustomModal from "@/components/CustomModal";
 const TransferScreen = () => {
   const navigation = useNavigation();
   const [amount, setAmount] = useState("");
-  const [notes, setNotes] = useState(""); //
+  const [notes, setNotes] = useState(""); 
   const [isSuccessModalVisible, setSuccessModalVisible] = useState(false);
   const balance = 10000000;
   const recipient = "9000008940208";

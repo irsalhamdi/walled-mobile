@@ -68,13 +68,41 @@ const RegisterScreen = () => {
 
 // **Gaya**
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#fff", padding: 20 },
-  logo: { width: 200, height: 200, marginBottom: 10 },
-  checkboxContainer: { flexDirection: "row", alignItems: "center", marginBottom: 20 },
-  checkboxText: { marginLeft: 10, fontSize: 14, color: "#666" },
-  termsLink: { color: "#2563eb", fontWeight: "bold" },
-  loginText: { marginTop: 15, fontSize: 14, color: "#666" },
-  loginLink: { color: "#2563eb", fontWeight: "bold" },
+  container: { 
+    flex: 1, 
+    justifyContent: "center", 
+    alignItems: "center", 
+    backgroundColor: "#fff", 
+    padding: 20 
+  },
+  logo: { 
+    width: 200, 
+    height: 200, 
+    marginBottom: 10 
+  },
+  checkboxContainer: { 
+    flexDirection: "row", 
+    alignItems: "center", 
+    marginBottom: 20 
+  },
+  checkboxText: { 
+    marginLeft: 10, 
+    fontSize: 14, 
+    color: "#666" 
+  },
+  termsLink: { 
+    color: "#2563eb", 
+    fontWeight: "bold" 
+  },
+  loginText: { 
+    marginTop: 15, 
+    fontSize: 14, 
+    color: "#666" 
+  },
+  loginLink: { 
+    color: "#2563eb", 
+    fontWeight: "bold" 
+  },
 });
 
 export default RegisterScreen;
