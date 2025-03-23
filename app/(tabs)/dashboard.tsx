@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { View, Text, Image, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useRouter } from 'expo-router';
 
 const transactions = [
   { id: '1', name: 'Adityo Gizwanda', type: 'Transfer', amount: '- 75.000,00', date: '08 December 2024', isPositive: false },
@@ -11,6 +12,16 @@ const transactions = [
 
 const HomeScreen = () => {
   const [isBalanceVisible, setIsBalanceVisible] = useState(true);
+
+  const router = useRouter();
+
+  const onTopUpPress = () => {
+    router.push('/topup');
+  };
+
+  const onTransferPress = () => {
+    router.push('/transfer');
+  };
 
   return (
     <View style={styles.container}>
@@ -53,10 +64,10 @@ const HomeScreen = () => {
           </View>
 
           <View style={styles.actions}>
-            <TouchableOpacity style={styles.actionButton}>
+            <TouchableOpacity style={styles.actionButton} onPress={onTopUpPress}>
               <Icon name="add-outline" size={24} color="white" />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.actionButton}>
+            <TouchableOpacity style={styles.actionButton} onPress={onTransferPress}>
               <Icon name="paper-plane-outline" size={24} color="white" />
             </TouchableOpacity>
           </View>
