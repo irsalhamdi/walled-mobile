@@ -4,7 +4,7 @@ import { useRouter, useLocalSearchParams } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
-import { validateRegisterForm } from "../utils/validation"; // 🔥 Import validasi
+import { validateRegisterForm } from "../utils/validation"; 
 
 const RegisterScreen = () => {
   const router = useRouter();
@@ -25,7 +25,7 @@ const RegisterScreen = () => {
   }, [params]);
 
   const handleRegister = () => {
-    const { errors, isValid } = validateRegisterForm(fullname, email, password); // 🔥 Gunakan validasi dari utils
+    const { errors, isValid } = validateRegisterForm(fullname, email, password); 
     setErrors(errors);
 
     if (!isValid) return;

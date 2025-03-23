@@ -15,7 +15,7 @@ function TermsAndConditionsScreen() {
   const handleAccept = () => {
     setAccepted(true);
     Alert.alert("Thank you!", "You have accepted the Terms & Conditions.");
-    router.push("/register?acceptedTerms=true"); // Kembali ke halaman Register
+    router.push("/register?acceptedTerms=true"); 
   };
 
   return (

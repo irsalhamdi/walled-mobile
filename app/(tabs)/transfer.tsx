@@ -3,6 +3,8 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Modal } from "reac
 import { useNavigation } from "@react-navigation/native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import CustomModal from "@/components/CustomModal";
+import { useTheme } from "@/context/ThemeContext";
+
 
 const TransferScreen = () => {
   const navigation = useNavigation();
@@ -27,38 +29,41 @@ const TransferScreen = () => {
     setNotes(""); 
   };
 
+  const { isDarkMode } = useTheme(); 
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, isDarkMode && styles.containerDark]}>
       <View style={styles.headerContainer}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-          <Ionicons name="arrow-back" size={24} color="#2d6cdf" />
+        <Ionicons name="arrow-back" size={24} color={isDarkMode ? "#fff" : "#2d6cdf"} />
         </TouchableOpacity>
-        <Text style={styles.header}>Transfer</Text>
+        <Text style={[styles.header, isDarkMode && styles.textDark]}>Transfer</Text>
       </View>
       
-      <View style={styles.recipientContainer}>
+      <View style={[styles.recipientContainer, isDarkMode && styles.recipientContainerDark]}>
         <Text style={styles.recipientLabel}>To: <Text style={styles.recipient}>{recipient}</Text></Text>
       </View>
 
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Amount</Text>
+      <View style={[styles.inputContainer, isDarkMode && styles.inputContainerDark]}>
+        <Text style={[styles.label, isDarkMode && styles.darkText]}>Amount</Text>
         <View style={styles.amountRow}>
           <Text style={styles.currency}>IDR</Text>
           <TextInput
-            style={styles.inputAmount}
+            style={[styles.inputAmount, isDarkMode && styles.textDark]}
             keyboardType="numeric"
             value={amount}
             onChangeText={handleAmountChange}
             placeholder="0"
+            placeholderTextColor={isDarkMode ? "#aaa" : "#000"}
           />
         </View>
-        <View style={styles.separator} />
-          <Text style={styles.balance}>Balance <Text style={styles.balanceAmount}>IDR {balance.toLocaleString()}</Text></Text>
+        <View style={[styles.separator, isDarkMode && styles.separatorDark]} />
+          <Text style={[styles.balance, isDarkMode && styles.darkText]}>Balance <Text style={styles.balanceAmount}>IDR {balance.toLocaleString()}</Text></Text>
       </View>
       
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Notes</Text>
-        <TextInput style={styles.input}
+      <View style={[styles.inputContainer, isDarkMode && styles.inputContainerDark]}>
+        <Text style={[styles.label, isDarkMode && styles.darkText]}>Notes</Text>
+        <TextInput style={[styles.input, isDarkMode && styles.textDark]}
         value={notes}
         onChangeText={setNotes}
         />
@@ -206,6 +211,25 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
   },
+  containerDark: {
+    backgroundColor: "#121212",
+  },  
+  textDark: {
+    color: "#fff",
+  },  
+  recipientContainerDark: {
+    backgroundColor: "#1e1e1e",
+  },  
+  inputContainerDark: {
+    backgroundColor: "#1e1e1e",
+    borderColor: "#444",
+  },  
+  separatorDark: {
+    backgroundColor: "#555",
+  },  
+  darkText: {
+    color: "#FFF"
+ },
 });
 
 export default TransferScreen;

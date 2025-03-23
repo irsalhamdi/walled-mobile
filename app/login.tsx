@@ -3,7 +3,7 @@ import { View, Text, Image, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
-import { validateLoginForm } from "../utils/validation"; // 🔥 Import validasi
+import { validateLoginForm } from "../utils/validation"; 
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -12,7 +12,7 @@ export default function LoginScreen() {
   const [errors, setErrors] = useState({ email: "", password: "" });
 
   const handleLogin = () => {
-    const { errors, isValid } = validateLoginForm(email, password); // 🔥 Gunakan validasi dari utils
+    const { errors, isValid } = validateLoginForm(email, password); 
     setErrors(errors);
 
     if (!isValid) return;
