@@ -47,9 +47,9 @@ const TransferScreen = () => {
       <View style={[styles.inputContainer, isDarkMode && styles.inputContainerDark]}>
         <Text style={[styles.label, isDarkMode && styles.darkText]}>Amount</Text>
         <View style={styles.amountRow}>
-          <Text style={styles.currency}>IDR</Text>
+          <Text style={[styles.currency, isDarkMode && styles.textDark]}>IDR</Text>
           <TextInput
-            style={[styles.inputAmount, isDarkMode && styles.textDark]}
+            style={styles.inputAmount}
             keyboardType="numeric"
             value={amount}
             onChangeText={handleAmountChange}
@@ -58,7 +58,9 @@ const TransferScreen = () => {
           />
         </View>
         <View style={[styles.separator, isDarkMode && styles.separatorDark]} />
-          <Text style={[styles.balance, isDarkMode && styles.darkText]}>Balance <Text style={styles.balanceAmount}>IDR {balance.toLocaleString()}</Text></Text>
+          <Text style={[styles.balance, isDarkMode && styles.darkText]}>Balance 
+          <Text style={[styles.balanceAmount, isDarkMode && styles.darkText]}>IDR {balance.toLocaleString()}</Text>
+          </Text>
       </View>
       
       <View style={[styles.inputContainer, isDarkMode && styles.inputContainerDark]}>

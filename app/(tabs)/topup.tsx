@@ -88,7 +88,6 @@ function TopUpScreen() {
         <Text style={[styles.label, isDarkMode && styles.darkText]}>Notes</Text>
         <TextInput
           style={[styles.input, isDarkMode && styles.darkText]}
-          placeholder="Optional"
           placeholderTextColor={isDarkMode ? "#aaa" : "#999"}
           value={notes}
           onChangeText={setNotes}
