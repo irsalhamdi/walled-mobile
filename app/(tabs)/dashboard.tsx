@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { View, Text, Image, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -10,6 +10,8 @@ const transactions = [
 ];
 
 const HomeScreen = () => {
+  const [isBalanceVisible, setIsBalanceVisible] = useState(true);
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -33,28 +35,33 @@ const HomeScreen = () => {
       </View>
 
       <View style={styles.balanceContainer}>
-  <Text style={styles.balanceLabel}>Balance</Text>
+        <Text style={styles.balanceLabel}>Balance</Text>
 
-  {/* Baris saldo & ikon mata */}
-  <View style={styles.balanceRow}>
-    <View style={styles.balanceLeft}>
-      <Text style={styles.balanceAmount}>Rp 10.000.000</Text>
-      <Icon name="eye-outline" size={20} color="#555" style={styles.eyeIcon} />
-    </View>
+        <View style={styles.balanceRow}>
+          <View style={styles.balanceLeft}>
+            <Text style={styles.balanceAmount}>
+                {isBalanceVisible ? 'Rp 10.000.000' : '******'}
+            </Text>
+            <TouchableOpacity onPress={() => setIsBalanceVisible(!isBalanceVisible)}>
+              <Icon 
+                name={isBalanceVisible ? 'eye-outline' : 'eye-off-outline'} 
+                size={20} 
+                color="#555" 
+                style={styles.eyeIcon} 
+              />
+            </TouchableOpacity>
+          </View>
 
-    {/* Tombol-tombol di pojok kanan */}
-    <View style={styles.actions}>
-      <TouchableOpacity style={styles.actionButton}>
-        <Icon name="add-outline" size={24} color="white" />
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.actionButton}>
-        <Icon name="paper-plane-outline" size={24} color="white" />
-      </TouchableOpacity>
-    </View>
-  </View>
-</View>
-
-
+          <View style={styles.actions}>
+            <TouchableOpacity style={styles.actionButton}>
+              <Icon name="add-outline" size={24} color="white" />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.actionButton}>
+              <Icon name="paper-plane-outline" size={24} color="white" />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
 
       <Text style={styles.transactionTitle}>Transaction History</Text>
       <FlatList
@@ -154,17 +161,17 @@ const styles = StyleSheet.create({
   balanceRow: { 
     flexDirection: 'row', 
     alignItems: 'center', 
-    justifyContent: 'space-between', // Memisahkan saldo & tombol
+    justifyContent: 'space-between', 
     marginTop: 8 
   },
   balanceLeft: { 
     flexDirection: 'row', 
-    alignItems: 'center' // Menjaga ikon mata tetap sejajar dengan saldo
+    alignItems: 'center' 
   },
   balanceAmount: { 
     fontSize: 20, 
     fontWeight: 'bold', 
-    marginRight: 8 // Memberi jarak dengan ikon mata
+    marginRight: 8 
   },
   eyeIcon: { 
     padding: 4 
@@ -172,7 +179,7 @@ const styles = StyleSheet.create({
   actions: { 
     flexDirection: 'row', 
     alignItems: 'center', 
-    gap: 12 // Menjaga jarak antara tombol + dan kirim
+    gap: 12 
   },
   actionButton: { 
     backgroundColor: '#1E88E5', 
@@ -182,8 +189,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center', 
     width: 50, 
     height: 50, 
-  },
-  
+  },  
   transactionTitle: { 
     fontSize: 16, 
     fontWeight: 'bold', 
